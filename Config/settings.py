@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-party apps
+
+    # self-defined apps
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Config.urls'
+AUTH_USER_MODEL = 'account.User'
 
 TEMPLATES = [
     {
@@ -78,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': os.environ.get('USERNAME', 'unknown'),
         'PASSWORD': os.environ.get('PASSWORD', 'secret'),
-        'NAME': os.environ.get('DATABASE', 'demo'),
+        'NAME': os.environ.get('NAME', 'unknown'),
         'HOST': os.environ.get('HOST', 'unknow'),
         'PORT': os.environ.get('PORT', 'unknow'),
         }
