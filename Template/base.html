@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %} {% endblock title %}</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Bodo - Simple One Page Personal" name="description">
+    <meta content="BdgPixel" name="author">
+
+    <!--Fav-->
+    <!--link href="{% static 'images/favicon.ico' %}" rel="shortcut icon"-->
+
+    <!--styles-->
+    {% block ext_css %}{% endblock ext_css %}
+    {% block ext_js %}{% endblock ext_js %}
+    <!--[if lt IE 9]>
+       <script type="text/javascript" src="js/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>  
+        {% block content %}
+        {% endblock content %}
+  </body>
+  {% block bottom_js %}{% endblock bottom_js %}
+</html>

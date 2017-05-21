@@ -4,7 +4,7 @@ from django.contrib.auth.models import (
 )
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, username, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -14,13 +14,13 @@ class UserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            username=username,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password):
+    def create_superuser(self, email, username, password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -28,8 +28,9 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email,
             password=password,
-            date_of_birth=date_of_birth,
+            username=username,
         )
+        user.is_active = True
         user.is_admin = True
         user.save(using=self._db)
         return user
@@ -41,25 +42,29 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField()
-    is_active = models.BooleanField(default=True)
+    username = models.CharField(max_length=32, unique=True)
+    real_name = models.CharField(max_length=32, null=True)
+    date_of_birth = models.DateField(null=True)
+    is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    photo = models.ImageField(upload_to='users/photoes/%m/%d/', null=True)
+    joined = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     def get_full_name(self):
         # The user is identified by their email address
-        return self.email
+        return self.username
 
     def get_short_name(self):
         # The user is identified by their email address
-        return self.email
+        return self.username
 
     def __str__(self):              # __unicode__ on Python 2
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

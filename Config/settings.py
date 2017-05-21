@@ -60,7 +60,7 @@ AUTH_USER_MODEL = 'account.User'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'Templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,5 +132,5 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'collectstatic', 'static_r
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'collectstatic', 'media_root')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'Static'),
 )
